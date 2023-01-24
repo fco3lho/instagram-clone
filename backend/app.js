@@ -16,6 +16,15 @@ app.use(express.urlencoded({extended: false}))
 const router = require("./routes/router.js")
 app.use(router)
 
+//solve CORS
+app.use(cors({credentials: true, origin: "http://localhost:3000"}))
+
+//upload directory
+app.use("./uploads", express.static(path.join(__dirname, "/uploads")))
+
+//DB connection
+require("./config/db.js")
+
 app.listen(port, () => {
     console.log(`Aplicação funcionando na porta ${port}`)
 })
