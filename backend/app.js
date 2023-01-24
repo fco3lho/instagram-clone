@@ -12,6 +12,10 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+//routes
+const router = require("./routes/router.js")
+app.use(router)
+
 app.listen(port, () => {
     console.log(`Aplicação funcionando na porta ${port}`)
 })
