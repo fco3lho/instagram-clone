@@ -2,7 +2,7 @@ const multer = require("multer")
 const path = require("path")
 
 //Destination to store image
-const imageStore = multer.diskStorage({
+const imageStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         let folder = ""
 
@@ -27,7 +27,7 @@ const imageUpload = multer({
             //Upload only png and jpg formats
             return cb(new Error("Por favor, envie apenas em formato .jpg ou .png."))
         }
-        cb(indefined, true)
+        cb(undefined, true)
     }
 })
 
