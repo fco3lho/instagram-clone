@@ -12,7 +12,7 @@ const Register = () => {
   }
 
   return (
-    <div>
+    <div id="register">
       <h2>Instagram</h2>
       <p className="subtitle">Cadastre-se para ver fotos e vídeos dos seus amigos.</p>
       <form onSubmit={handleSubmit}>
