@@ -2,6 +2,7 @@ import "./Auth.css";
 
 //Components
 import { Link } from "react-router-dom";
+import Message from "../../components/Message.js";
 
 //Hooks
 import { useState, useEffect } from "react";
@@ -16,9 +17,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const {loading, error} = useSelector((state) => state.auth)
+  const { loading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,13 +33,13 @@ const Register = () => {
 
     console.log(user);
 
-    dispatch(register(user))
+    dispatch(register(user));
   };
 
   //Clean all auth states
   useEffect(() => {
-    dispatch(reset())
-  }, [dispatch])
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <div id="register">
@@ -71,7 +72,9 @@ const Register = () => {
           onChange={(e) => setConfirmPassword(e.target.value)}
           value={confirmPassword || ""}
         />
-        <input type="submit" value="Cadastrar" />
+        {!loading && <input type="submit" value="Cadastrar" />}
+        {loading && <input type="submit" value="Aguarde" disabled/>}
+        {error && <Message msg={error} type="error"/>}
       </form>
 
       <p>
