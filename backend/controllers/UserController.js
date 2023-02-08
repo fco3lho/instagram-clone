@@ -2,33 +2,34 @@ const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
-const mongoose = require("mongoose");
+const { default: mongoose } = require("mongoose");
 
 const jwtSecret = process.env.JWT_SECRET;
 
-//Generate user token
+// Generate user token
 const generateToken = (id) => {
-  return jwt.sign({ id }, jwtSecret, { expiresIn: "7d" });
+  return jwt.sign({ id }, jwtSecret, {
+    expiresIn: "7d",
+  });
 };
 
-//Register user and sign in
+// Register user and sign in
 const register = async (req, res) => {
   const { name, email, password } = req.body;
 
-  //Check if user exists
+  // check if user exists
   const user = await User.findOne({ email });
 
   if (user) {
-    res.status(422).json({ errors: ["Por favor, utilize outro email."] });
+    res.status(422).json({ errors: ["Por favor, utilize outro e-mail."] });
     return;
   }
 
-  //Generate password hash
+  // Generate password hash
   const salt = await bcrypt.genSalt();
   const passwordHash = await bcrypt.hash(password, salt);
 
-  //Create user
+  // Create user
   const newUser = await User.create({
     name,
     email,
@@ -37,9 +38,9 @@ const register = async (req, res) => {
 
   // If user was created sucessfully, return the token
   if (!newUser) {
-    res
-      .status(422)
-      .json({ errors: ["Houve um erro, por favor tente mais tarde."] });
+    res.status(422).json({
+      errors: ["Houve um erro, por favor tente novamente mais tarde."],
+    });
     return;
   }
 
@@ -49,25 +50,32 @@ const register = async (req, res) => {
   });
 };
 
-//Sign user in
+// Get logged in user
+const getCurrentUser = async (req, res) => {
+  const user = req.user;
+
+  res.status(200).json(user);
+};
+
+// Sign user in
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
 
-  //Check if user exist
+  // Check if user exists
   if (!user) {
-    res.status(404).json({ errors: ["Usuário não encontrado."] });
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
     return;
   }
 
-  //Check if password matches
+  // Check if password matches
   if (!(await bcrypt.compare(password, user.password))) {
-    res.status(422).json({ errors: ["Senha inválida."] });
+    res.status(422).json({ errors: ["Senha inválida!"] });
     return;
   }
 
-  //Return user with token
+  // Return user with token
   res.status(200).json({
     _id: user._id,
     profileImage: user.profileImage,
@@ -75,14 +83,7 @@ const login = async (req, res) => {
   });
 };
 
-//Get current logged in user
-const getCurrentUser = async (req, res) => {
-  const user = req.user;
-
-  res.status(200).json(user);
-};
-
-//Update user
+// Update user
 const update = async (req, res) => {
   const { name, password, bio } = req.body;
 
@@ -121,16 +122,17 @@ const update = async (req, res) => {
   res.status(200).json(user);
 };
 
-//Get user by id
+// Get user by id
 const getUserById = async (req, res) => {
   const { id } = req.params;
 
-  const user = await User.findById(mongoose.Types.ObjectById(id)).select(
+  const user = await User.findById(mongoose.Types.ObjectId(id)).select(
     "-password"
   );
-  //Check if user exists
+
+  // Check if user exists
   if (!user) {
-    res.status(404).json({ errors: ["Usuário não encontrado."] });
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
     return;
   }
 

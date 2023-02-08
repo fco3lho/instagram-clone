@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 });
 
 // routes
-const router = require("./routes/router.js");
+const router = require("./routes/Router.js");
 
 app.use(router);
 

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-//Controller
+// Controller
 const {
   insertPhoto,
   deletePhoto,
@@ -14,17 +14,17 @@ const {
   searchPhotos,
 } = require("../controllers/PhotoController");
 
-//Middlewares
+// Middlewares
+const authGuard = require("../middlewares/authGuard");
+const validate = require("../middlewares/handleValidations");
 const {
   photoInsertValidation,
   photoUpdateValidation,
   commentValidation,
-} = require("../middlewares/photoValidation");
-const authGuard = require("../middlewares/authGuard");
-const validate = require("../middlewares/handleValidation");
+} = require("../middlewares/photoValidations");
 const { imageUpload } = require("../middlewares/imageUpload");
 
-//Routes
+// Routes
 router.post(
   "/",
   authGuard,
@@ -34,11 +34,11 @@ router.post(
   insertPhoto
 );
 router.delete("/:id", authGuard, deletePhoto);
-router.get("/", authGuard, getAllPhotos);
-router.get("/user/:id", authGuard, getUserPhotos);
-router.get("/search", authGuard, searchPhotos);
+router.get("/", getAllPhotos);
+router.get("/user/:id", getUserPhotos);
+router.get("/search", searchPhotos);
 
-router.get("/:id", authGuard, getPhotoById);
+router.get("/:id", getPhotoById);
 router.put(
   "/:id",
   authGuard,
@@ -47,7 +47,7 @@ router.put(
   validate,
   updatePhoto
 );
-router.put("/like:id", authGuard, likePhoto);
+router.put("/like/:id", authGuard, likePhoto);
 router.put(
   "/comment/:id",
   authGuard,
