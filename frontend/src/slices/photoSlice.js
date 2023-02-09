@@ -47,7 +47,7 @@ export const photoSlice = createSlice({
         state.error = null;
         state.photo = action.payload;
         state.photos.unshift(state.photo)
-        state.messa = "Foto publicada com sucesso."
+        state.message = "Foto publicada com sucesso."
       })
       .addCase(publishPhoto.rejected, (state, action) => {
         state.loading = false;
