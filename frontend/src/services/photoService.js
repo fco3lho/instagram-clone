@@ -32,7 +32,7 @@ const getUserPhotos = async (id, token) => {
 
 //Delete a photo
 const deletePhoto = async (id, token) => {
-  const request = requestConfig("DELETE", null, token);
+  const config = requestConfig("DELETE", null, token);
 
   try {
     const res = await fetch(api + "/photos/" + id, config)
