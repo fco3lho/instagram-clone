@@ -122,7 +122,7 @@ const Profile = () => {
       )}
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
-        <div className="container">
+        <div className="photos-container">
           {photos &&
             photos.map((photo) => (
               <div className="photo" key={photo._id}>
@@ -133,7 +133,13 @@ const Profile = () => {
                   />
                 )}
                 {id === userAuth._id ? (
-                  <p>actions</p>
+                  <div className="actions">
+                    <Link to={`/photos/${photo._id}`}>
+                      <BsFillEyeFill/>
+                    </Link>
+                    <BsPencilFill />
+                    <BsXLg />
+                  </div>
                 ) : (
                   <Link className="btn" to={`/photos/${photo._id}`}>
                     Ver
