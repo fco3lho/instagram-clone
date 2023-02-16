@@ -6,11 +6,12 @@ mongoose.set("strictQuery", true);
 //connection
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
+const dbIDCluster = process.env.DB_IDCLUSTER
 
 const conn = async () => {
   try {
     const dbConn = await mongoose.connect(
-      `mongodb+srv://${dbUser}:${dbPassword}@cluster0.id2m7z8.mongodb.net/?retryWrites=true&w=majority`
+      `mongodb+srv://${dbUser}:${dbPassword}@cluster0.${dbIDCluster}.mongodb.net/?retryWrites=true&w=majority`
     );
     console.log("Conectou ao banco de dados.");
     
