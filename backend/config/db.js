@@ -6,7 +6,7 @@ mongoose.set("strictQuery", true);
 //connection
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
-const dbIDCluster = process.env.DB_IDCLUSTER
+const dbIDCluster = process.env.DB_IDCLUSTER;
 
 const conn = async () => {
   try {
